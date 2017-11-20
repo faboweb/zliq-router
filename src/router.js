@@ -19,7 +19,7 @@ function interceptClickEvent(routerState$) {
                 } 
                 pushRoute(routerState$, {route, query, anchor}); 
                 //tell the browser not to respond to the link click 
-                e.preventDefault(); 
+                e.preventDefault();
             } 
         }
     }
@@ -144,8 +144,7 @@ function dispatchRouteChange(routerState$, route, query) {
 
 function pushRoute(routerState$, {route, query, anchor}) { 
     let url = `${route || '/'}${query ? '?' + query : ''}`
-    location.replace(url)
-    history.pushState({anchor, route, query}, '', `${route}${query ? '?' + query : '?'}`); 
+    history.pushState({anchor, route, query}, '', `${route}${query ? '?' + query : ''}`); 
     if (anchor) { 
       location.hash = '#' + anchor; 
     } 
