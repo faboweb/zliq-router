@@ -13,7 +13,7 @@ $ npm install --save zliq zliq-router
 
 Then initialize the router which hooks into document events
 ```js
-import {h} from 'zliq';
+import {h, render} from 'zliq';
 import {initRouter} from 'zliq-router';
 
 let router$ = initRouter()
@@ -21,7 +21,7 @@ let router$ = initRouter()
 let app = <div>
         <a href="/route?param=value#anchor" />
     </div>;
-document.querySelector('#app').appendChild(app);
+render(app, document.querySelector('#app');
 
 // Will be '/route {param: 'value'} anchor after click on link
 router$.map(({route, params, anchor}) => console.log(route, params, anchor))
@@ -41,12 +41,15 @@ let app = <div>
          )
         }
     </div>;
-document.querySelector('#app').appendChild(app);
+render(app, document.querySelector('#app');
 ```
 
 Or you use the Router component. The component also registers its route so we can fallback to '/' on missing route.
 We can also add a '/404' route that gets triggered on a missing route if available.
 ```js
+import {h, render} from 'zliq';
+import {initRouter, Router} from 'zliq-router';
+
 let router$ = initRouter()
 
 let app = <div>
@@ -58,7 +61,7 @@ let app = <div>
             <h1>Subpage</h1>
         </Router>
     </div>;
-document.querySelector('#app').appendChild(app);
+render(app, document.querySelector('#app');
 ```
 
 [npm]: https://www.npmjs.com/
