@@ -1,9 +1,12 @@
 import { initRouter, removeRouter, Router } from '../src'; 
 import { h, testRender, test$ } from 'zliq'; 
  
-let location = {pathname: '/route', search: '?param=value', hash: ''}; 
+let location = {pathname: '/route', search: '?param=value', hash: ''};
  
-describe('Router', ()=> { 
+describe('Router', ()=> {
+  beforeAll(() => {
+    window.history.pushState({route: '/reset', query: {reset:true}}, 'Reset', '/reset');
+  })
   afterEach(() => {
     removeRouter()
     window.history.pushState({route: '/reset', query: {reset:true}}, 'Reset', '/reset');
@@ -46,6 +49,25 @@ describe('Router', ()=> {
       ({element}) => element.click()
     ], null, true); 
   }); 
+ 
+  it('should react to ankor link clicks', (done) => { 
+    let link = <a href="#ankor" /> 
+ 
+    let router$ = initRouter(); 
+    
+    test$(router$, [
+      () => {},
+      ({route, params}) => {
+        expect(document.location.pathname).toBe('/reset')
+        expect(document.location.hash).toBe('#ankor')
+        expect(route).toBe('/reset'); 
+      } 
+    ], done); 
+ 
+    testRender(link, [ 
+      ({element}) => element.click()
+    ], null, true); 
+  }); 
   
    it('should react to sequential route changes', (done) => { 
      let router$ = initRouter(location); 
@@ -73,7 +95,6 @@ describe('Router', ()=> {
     })
    }); 
  
-  // jsdom fails here 
   it('should react to browser go back events', (done)=> { 
     let router$ = initRouter(); 
     
